@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { SetStateAction, useEffect, useState } from 'react';
+import { ImojiIcon, Tail } from './assets';
+import * as S from './style';
+import { useDebounce } from './utils';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [change, setChange] = useState(false);
+  const [keyword, setKeyword] = useState('');
+
+  const typingInput = (e: { target: { value: SetStateAction<string> } }) => {
+    setKeyword(e.target.value);
+  };
+
+  const changeKeyword = useDebounce(keyword, 1000);
+
+  useEffect(() => {
+    if (keyword !== '') {
+      setChange(true);
+    }
+  }, [changeKeyword]);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <S.Wrapper>
+        <S.InputWrapper>
+          <S.TextContainer>
+            <S.Title>
+              보안 <span style={{ fontStyle: 'italic' }}>CHECK?!</span>
+            </S.Title>
+            <S.Question>여러분의 비밀번호의 보안 강도는 얼마나 될까요?</S.Question>
+          </S.TextContainer>
+          <S.Input onChange={typingInput} value={keyword} placeholder="자신의 비밀번호를 입력해주세요." />
+        </S.InputWrapper>
+        <S.ImojiContainer>
+          <ImojiIcon isSpin={!change} />
+          <S.Box>
+            <S.BoxText>
+              해제하는데 걸리는 시간은 <span style={{ fontStyle: 'italic' }}>??</span> 입니다.
+            </S.BoxText>
+            <S.BoxTail>
+              <Tail />
+            </S.BoxTail>
+          </S.Box>
+        </S.ImojiContainer>
+        <S.Image src="../public/cyberGuardiansIcon.png" />
+      </S.Wrapper>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
