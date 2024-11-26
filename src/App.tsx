@@ -1,5 +1,5 @@
 import { SetStateAction, useEffect, useState } from 'react';
-import { ImojiIcon, Tail } from './assets';
+import { CloseEye, ImojiIcon, OpenEye, Tail } from './assets';
 import * as S from './style';
 import { useDebounce } from './utils';
 import axios from 'axios';
@@ -14,6 +14,8 @@ function App() {
   const [beforeKeyword, setBeforeKeyword] = useState('');
   const [cracking, setCracking] = useState();
   const [strength, setStrength] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showBeforePassword, setShowBeforePassword] = useState(false);
 
   const typingBeforeInput = (e: { target: { value: SetStateAction<string> } }) => {
     setBeforeKeyword(e.target.value);
@@ -74,6 +76,14 @@ function App() {
     return <span style={{ fontStyle: 'italic', color: textColor }}>{strength ? strength : '??'}</span>;
   };
 
+  const toggleBeforePasswordVisibility = () => {
+    setShowBeforePassword((prev) => !prev);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   return (
     <>
       <S.Wrapper>
@@ -88,20 +98,28 @@ function App() {
             <S.InputBox>
               <S.InputText>비밀번호</S.InputText>
               <S.Input
+                type={showPassword ? 'text' : 'password'}
                 onChange={typingBeforeInput}
                 value={beforeKeyword}
                 placeholder="자신의 비밀번호를 입력해주세요."
               />
+              <S.EyeContainer onClick={togglePasswordVisibility}>
+                {showPassword ? <OpenEye /> : <CloseEye />}
+              </S.EyeContainer>
             </S.InputBox>
             <S.InputBox>
               <S.InputText>비밀번호 확인</S.InputText>
               <S.Input
+                type={showBeforePassword ? 'text' : 'password'}
                 onChange={typingInput}
                 value={keyword}
                 placeholder="자신의 비밀번호를 입력해주세요."
                 disabled={beforeKeyword === ''}
               />
-            </S.InputBox>{' '}
+              <S.EyeContainer onClick={toggleBeforePasswordVisibility}>
+                {showBeforePassword ? <OpenEye /> : <CloseEye />}
+              </S.EyeContainer>
+            </S.InputBox>
           </S.InputContainer>
         </S.InputWrapper>
         <S.ImojiContainer>

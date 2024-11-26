@@ -49,6 +49,14 @@ export const InputBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  position: relative;
+`;
+
+export const EyeContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  cursor: pointer;
 `;
 
 export const InputText = styled.p`
