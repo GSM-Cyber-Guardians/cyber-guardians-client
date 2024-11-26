@@ -116,7 +116,7 @@ function App() {
             </S.BoxTail>
           </S.Box>
         </S.ImojiContainer>
-        <S.Image src="../public/assets/cyberGuardiansIcon.png" />
+        <S.Image src="https://www.cyberguardians.or.kr/images/common3/h_logo.png" />
       </S.Wrapper>
       <ToastContainer autoClose={3000} />
       <div>
