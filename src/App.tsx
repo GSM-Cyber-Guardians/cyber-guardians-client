@@ -31,6 +31,8 @@ function App() {
       passwordStrengthData();
     } else if (keyword !== '' && beforeKeyword !== keyword) {
       toast.error('비밀번호 확인을 검토해주세요.');
+    } else if (keyword === '') {
+      setChange(false);
     }
   }, [changeKeyword]);
 
@@ -97,7 +99,7 @@ function App() {
                 onChange={typingInput}
                 value={keyword}
                 placeholder="자신의 비밀번호를 입력해주세요."
-                disabled={beforeKeyword === '' || keyword !== ''}
+                disabled={beforeKeyword === ''}
               />
             </S.InputBox>{' '}
           </S.InputContainer>
