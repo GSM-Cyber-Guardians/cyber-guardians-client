@@ -44,29 +44,35 @@ const Emoji = styled.div`
 
 interface ImojiIconProps {
   isSpin: boolean;
+  cracking: string | undefined;
 }
 
-const ImojiIcon: React.FC<ImojiIconProps> = ({ isSpin }) => {
+const ImojiIcon: React.FC<ImojiIconProps> = ({ isSpin, cracking }) => {
   const emojis = ['😮', '😡', '😐', '😄', '😱'];
+  const imoji =
+    cracking === 'Weak'
+      ? '😡'
+      : cracking === 'Moderate'
+      ? '😐'
+      : cracking === 'Strong'
+      ? '😄'
+      : cracking === 'Very Strong'
+      ? '😱'
+      : cracking === 'Unknown'
+      ? '😮'
+      : null;
 
   return (
     <SlotWrapper>
-      {isSpin ? (
-        <SlotContent isSpin={isSpin}>
-          {emojis.map((emoji, index) => (
-            <Emoji key={index}>{emoji}</Emoji>
-          ))}
-          {emojis.map((emoji, index) => (
-            <Emoji key={index + emojis.length}>{emoji}</Emoji>
-          ))}
-        </SlotContent>
-      ) : (
-        <SlotContent isSpin={isSpin}>
-          {emojis.map((emoji, index) => (
-            <Emoji key={index}>{emoji}</Emoji>
-          ))}
-        </SlotContent>
-      )}
+      <SlotContent isSpin={isSpin}>
+        {isSpin ? (
+          emojis
+            .map((emoji, index) => <Emoji key={index}>{emoji}</Emoji>)
+            .concat(emojis.map((emoji, index) => <Emoji key={index + emojis.length}>{emoji}</Emoji>))
+        ) : (
+          <Emoji>{imoji}</Emoji>
+        )}
+      </SlotContent>
     </SlotWrapper>
   );
 };

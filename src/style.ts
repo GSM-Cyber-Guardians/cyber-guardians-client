@@ -39,6 +39,25 @@ export const InputWrapper = styled.div`
   gap: 2.875rem;
 `;
 
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`;
+
+export const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`;
+
+export const InputText = styled.p`
+  color: #fff;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+`;
+
 export const Input = styled.input`
   width: 52.6875rem;
   height: 3.75rem;
